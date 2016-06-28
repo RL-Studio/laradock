@@ -49,33 +49,6 @@ services:
         links:
             - php-fpm
 
-### MySQL Container #########################################
-
-    mysql:
-        build: ./mysql
-        volumes_from:
-            - data
-        ports:
-            - "3306:3306"
-        environment:
-            MYSQL_DATABASE: homestead
-            MYSQL_USER: homestead
-            MYSQL_PASSWORD: secret
-            MYSQL_ROOT_PASSWORD: root
-
-### PostgreSQL Container ####################################
-
-    postgres:
-        build: ./postgres
-        volumes_from:
-            - data
-        ports:
-            - "5432:5432"
-        environment:
-            POSTGRES_DB: homestead
-            POSTGRES_USER: homestead
-            POSTGRES_PASSWORD: secret
-
 ### MariaDB Container #######################################
 
     mariadb:
@@ -90,26 +63,6 @@ services:
             MYSQL_PASSWORD: secret
             MYSQL_ROOT_PASSWORD: root
 
-### Neo4j Container #########################################
-
-    neo4j:
-        build: ./neo4j
-        ports:
-            - "7474:7474"
-            - "1337:1337"
-        environment:
-            - NEO4J_AUTH=homestead:secret
-        volumes_from:
-            - data
-
-### MongoDB Container #######################################
-
-    mongo:
-        build: ./mongo
-        ports:
-            - "27017:27017"
-        volumes_from:
-            - data
 
 ### Redis Container #########################################
 
@@ -119,36 +72,6 @@ services:
             - data
         ports:
             - "6379:6379"
-
-### Memcached Container #####################################
-
-    memcached:
-        build: ./memcached
-        volumes_from:
-            - data
-        ports:
-            - "11211:11211"
-        links:
-            - php-fpm
-
-### Beanstalkd Container ####################################
-
-    beanstalkd:
-        build: ./beanstalkd
-        ports:
-            - "11300:11300"
-        privileged: true
-        links:
-            - php-fpm
-
-### Beanstalkd Console Container ############################
-
-    beanstalkd-console:
-        build: ./beanstalkd-console
-        ports:
-            - "2080:2080"
-        links:
-            - beanstalkd
 
 ### Workspace Utilities Container ###########################
 
@@ -162,3 +85,8 @@ services:
         tty: true
 
 ### Add more Containers below ###############################
+
+    mailhog:
+        image: mailhog/mailhog
+        ports:
+            - "8025:8025"
